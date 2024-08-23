@@ -49,9 +49,14 @@ async def main() -> None:
     ]
 
     # run the programs
-    await run_sequence(*[service.run_program([msg]) for msg in wake_up_program])
+    await run_sequence(
+        *[
+            service.run_program(wake_up_program[:2]),
+            service.run_program(wake_up_program[2:])
+        ]
+    )
 
-    await run_parallel(*[service.run_program([msg]) for msg in sleep_program[:3]])
+    await run_parallel(*[service.run_program(sleep_program[:3])])
     await service.run_program([sleep_program[3]])
 
 
